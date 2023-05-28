@@ -22,11 +22,41 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create resources directory
-        run: mkdir -p ./src/main/resources
+      - name: Create application.yml
+        run: touch ./src/main/resources/application.yml
+
+      - name: Create config
+        run: touch ./src/main/resources/config
+
+      - name: Create oci_api_key.pem
+        run: touch ./src/main/resources/oci_api_key.pem
 
       - name: Set up application.yml
         run: echo "${{ secrets.APPLICATION_YAML_CONTENT }}" > ./src/main/resources/application.yml
+
+      - name: Set up config
+        run: echo "${{ secrets.CONFIG_CONTENT }}" > ./src/main/resources/config
+
+      - name: Set up oci_api_key.pem
+        run: echo "${{ secrets.OCI_API_KEY_CONTENT }}" > ./src/main/resources/oci_api_key.pem
+
+      - name: Upload application.yml
+        uses: actions/upload-artifact@v2
+        with:
+          name: application.yml
+          path: ./src/main/resources/application.yml
+
+      - name: Upload config
+        uses: actions/upload-artifact@v2
+        with:
+          name: config
+          path: ./src/main/resources/config
+
+      - name: Upload oci_api_key.pem
+        uses: actions/upload-artifact@v2
+        with:
+          name: oci_api_key.pem
+          path: ./src/main/resources/oci_api_key.pem
 
       - name: Set ENV
         run: echo "TIME=$(date "+%Y-%m-%d-%H-%M")" >> $GITHUB_ENV
