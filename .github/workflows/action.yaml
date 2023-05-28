@@ -22,14 +22,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create application.yml
-        run: touch ./src/main/resources/application.yml
-
-      - name: Create config
-        run: touch ./src/main/resources/config
-
-      - name: Create oci_api_key.pem
-        run: touch ./src/main/resources/oci_api_key.pem
+      - name: Create resources directory
+        run: mkdir -p ./src/main/resources
 
       - name: Set up application.yml
         run: echo "${{ secrets.APPLICATION_YAML_CONTENT }}" > ./src/main/resources/application.yml
